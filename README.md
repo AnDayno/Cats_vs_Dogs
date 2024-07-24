@@ -1,7 +1,7 @@
 UDEMY C SHARP PROGRAMMING FOR UNITY GAME DEVELOPMENT TUTORIAL
 
 Learn to use Unity and C Sharp ( C# ) to create a
-basic game. This course makes Unity fun not scary
+basic game.
 
 * Learned to Use Unity
 * Learned to create a working scene inside of Unity
