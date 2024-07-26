@@ -10,5 +10,6 @@ basic game.
 * Recognized what the main windows of Unity do
 * Learned how to use some of the complex parts of Unity like Raycasts and State Machines
 
-Cat vs Dog 
+Cat vs Dog
+
 Navigate through intricate mazes as a clever cat, dodging patrolling dogs, and find your way back home.
