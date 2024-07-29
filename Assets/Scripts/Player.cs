@@ -7,12 +7,13 @@ public class Player : MonoBehaviour
     public float gravity = 10;
     public float maxVelocityChange = 10;
     public float jumpHeight = 2;
+    public float rotationSpeed = 200;
     public int health = 1;
     public int points;
 
-    private bool grounded;
     private Transform playerTransform;
     private Rigidbody _rigidbody;
+    [SerializeField] float groundCheckDistance = 5f;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,8 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        playerTransform.Rotate(0, Input.GetAxis("Horizontal"), 0);
+        float horizontalInput = Input.GetAxis("Horizontal");
+        playerTransform.Rotate(0, horizontalInput * rotationSpeed * Time.deltaTime, 0);
 
         Vector3 targetVelocity = new(0, 0, Input.GetAxis("Vertical"));
         targetVelocity = playerTransform.TransformDirection(targetVelocity);
@@ -40,13 +42,13 @@ public class Player : MonoBehaviour
         velocityChange.y = 0;
         _rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
 
-        if (Input.GetButton("Jump") && grounded == true)
+        if (Input.GetButton("Jump") && Physics.Raycast(transform.position, Vector3.down, out RaycastHit _, groundCheckDistance))
         {
             _rigidbody.velocity = new Vector3(velocity.x, CalculateJump(), velocity.z);
         }
 
         _rigidbody.AddForce(new Vector3(0, -gravity * _rigidbody.mass, 0));
-        grounded = false;
+ 
     }
 
     private void Update()
@@ -61,11 +63,6 @@ public class Player : MonoBehaviour
         float jump = Mathf.Sqrt(2 * jumpHeight * gravity);
 
         return jump;
-    }
-
-    private void OnCollisionStay(Collision collision)
-    {
-        grounded = true;
     }
 
     private void OnTriggerEnter(Collider buddy)
